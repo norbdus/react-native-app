@@ -19,13 +19,13 @@ export default class App extends React.Component {
         username: 'norbdus',
         password: '12345678'
       });
-      const { user, token } = response.data;
+      const { token } = response.data;
+      console.log(token);
 
       await AsyncStorage.multiSet([
-        ['@todoList:token', token],
-        ['@todoList:user', JSON.stringify(user)]
+        ['@todoList:token', token]
       ]);
-      this.setState({ loggedInUser: user })
+      this.setState({ loggedInUser: true })
     } catch (response) {
       this.setState({ errorMessage: 'dados invalidos' })
     }
@@ -34,9 +34,8 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     const token = await AsyncStorage.getItem('@todoList:token');
-    const user = JSON.parse(await AsyncStorage.getItem('@todoList:user'))
-    if (token && user) {
-      this.setState({ loggedInUser: user })
+    if (token) {
+      this.setState({ loggedInUser: true })
     }
   }
 

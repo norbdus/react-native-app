@@ -75,8 +75,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
         errorMessage: null,
         loggedInUser: null
       }, _this.signIn = function _callee() {
-        var response, _response$data, user, token;
-
+        var response, token;
         return regeneratorRuntime.async(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -90,39 +89,40 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
               case 3:
                 response = _context.sent;
-                _response$data = response.data, user = _response$data.user, token = _response$data.token;
-                _context.next = 7;
-                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.multiSet([['@todoList:token', token], ['@todoList:user', JSON.stringify(user)]]));
+                token = response.data.token;
+                console.log(token);
+                _context.next = 8;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.multiSet([['@todoList:token', token]]));
 
-              case 7:
+              case 8:
                 _this.setState({
-                  loggedInUser: user
+                  loggedInUser: true
                 });
 
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
 
                 _this.setState({
                   errorMessage: 'dados invalidos'
                 });
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, null, _this2, [[0, 10]]);
+        }, null, _this2, [[0, 11]]);
       }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(App, [{
       key: "componentDidMount",
       value: function componentDidMount() {
-        var token, user;
+        var token;
         return regeneratorRuntime.async(function componentDidMount$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -132,21 +132,14 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
               case 2:
                 token = _context2.sent;
-                _context2.t0 = JSON;
-                _context2.next = 6;
-                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.getItem('@todoList:user'));
 
-              case 6:
-                _context2.t1 = _context2.sent;
-                user = _context2.t0.parse.call(_context2.t0, _context2.t1);
-
-                if (token && user) {
+                if (token) {
                   this.setState({
-                    loggedInUser: user
+                    loggedInUser: true
                   });
                 }
 
-              case 9:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -168,7 +161,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 45
+              lineNumber: 44
             }
           });
         });
@@ -178,7 +171,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             style: styles.containerLogin,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 49
+              lineNumber: 48
             }
           },
           this.state.loggedInUser && _react3.default.createElement(
@@ -186,7 +179,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 50
+                lineNumber: 49
               }
             },
             this.state.loggedInUser
@@ -196,7 +189,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 51
+                lineNumber: 50
               }
             },
             this.state.errorMessage
@@ -207,7 +200,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               style: styles.container,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 53
+                lineNumber: 52
               }
             },
             _react3.default.createElement(
@@ -216,7 +209,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 style: styles.header,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 54
+                  lineNumber: 53
                 }
               },
               _react3.default.createElement(
@@ -225,7 +218,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                   style: styles.headerText,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 55
+                    lineNumber: 54
                   }
                 },
                 "- NOTER -"
@@ -237,7 +230,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 style: styles.scrollContainer,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 58
+                  lineNumber: 57
                 }
               },
               tasks
@@ -248,7 +241,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 style: styles.footer,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 61
+                  lineNumber: 60
                 }
               },
               _react3.default.createElement(
@@ -258,7 +251,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                   style: styles.addButton,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 63
+                    lineNumber: 62
                   }
                 },
                 _react3.default.createElement(
@@ -267,7 +260,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     style: styles.addButtonText,
                     __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 64
+                      lineNumber: 63
                     }
                   },
                   "+"
@@ -286,7 +279,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 underlineColorAndroid: "transparent",
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 67
+                  lineNumber: 66
                 }
               })
             )
@@ -296,7 +289,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               style: styles.containerLogin,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 73
+                lineNumber: 72
               }
             },
             _react3.default.createElement(_reactNative.Button, {
@@ -304,7 +297,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               title: "Entrar",
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 74
+                lineNumber: 73
               }
             })
           )
