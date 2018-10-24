@@ -1,0 +1,7 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  function _has(prop, obj) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+  }
+
+  module.exports = _has;
+});

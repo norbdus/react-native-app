@@ -1,0 +1,19 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _arity = _require(_dependencyMap[0], './internal/_arity');
+
+  var _curry1 = _require(_dependencyMap[1], './internal/_curry1');
+
+  var _curry2 = _require(_dependencyMap[2], './internal/_curry2');
+
+  var _curryN = _require(_dependencyMap[3], './internal/_curryN');
+
+  var curryN = _curry2(function curryN(length, fn) {
+    if (length === 1) {
+      return _curry1(fn);
+    }
+
+    return _arity(length, _curryN(length, [], fn));
+  });
+
+  module.exports = curryN;
+});

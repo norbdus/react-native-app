@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry1 = _require(_dependencyMap[0], './internal/_curry1');
+
+  var always = _curry1(function always(val) {
+    return function () {
+      return val;
+    };
+  });
+
+  module.exports = always;
+});

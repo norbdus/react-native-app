@@ -1,0 +1,9 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry3 = _require(_dependencyMap[0], './internal/_curry3');
+
+  var _reduce = _require(_dependencyMap[1], './internal/_reduce');
+
+  var reduce = _curry3(_reduce);
+
+  module.exports = reduce;
+});

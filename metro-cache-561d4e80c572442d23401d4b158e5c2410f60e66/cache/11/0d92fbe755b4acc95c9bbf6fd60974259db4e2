@@ -1,0 +1,15 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _apisauce = _require(_dependencyMap[0], "apisauce");
+
+    var api = (0, _apisauce.create)({
+        baseURL: 'http://192.168.42.143:3000'
+    });
+    api.addResponseTransform(function (response) {
+        if (!response.ok) throw response;
+    });
+    exports.default = api;
+});

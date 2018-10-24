@@ -1,0 +1,13 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _arity = _require(_dependencyMap[0], './internal/_arity');
+
+  var _curry2 = _require(_dependencyMap[1], './internal/_curry2');
+
+  var bind = _curry2(function bind(fn, thisObj) {
+    return _arity(fn.length, function () {
+      return fn.apply(thisObj, arguments);
+    });
+  });
+
+  module.exports = bind;
+});

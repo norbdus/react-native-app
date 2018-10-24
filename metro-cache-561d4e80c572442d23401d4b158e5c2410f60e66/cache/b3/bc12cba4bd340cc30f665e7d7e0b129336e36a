@@ -1,0 +1,9 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _indexOf = _require(_dependencyMap[0], './_indexOf');
+
+  function _contains(a, list) {
+    return _indexOf(list, a, 0) >= 0;
+  }
+
+  module.exports = _contains;
+});

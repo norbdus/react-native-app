@@ -1,0 +1,9 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry2 = _require(_dependencyMap[0], './internal/_curry2');
+
+  var gte = _curry2(function gte(a, b) {
+    return a >= b;
+  });
+
+  module.exports = gte;
+});

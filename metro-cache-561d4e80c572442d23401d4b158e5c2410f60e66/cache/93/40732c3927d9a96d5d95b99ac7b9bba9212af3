@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry1 = _require(_dependencyMap[0], './internal/_curry1');
+
+  var curryN = _require(_dependencyMap[1], './curryN');
+
+  var curry = _curry1(function curry(fn) {
+    return curryN(fn.length, fn);
+  });
+
+  module.exports = curry;
+});

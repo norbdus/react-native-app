@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _checkForMethod = _require(_dependencyMap[0], './internal/_checkForMethod');
+
+  var _curry1 = _require(_dependencyMap[1], './internal/_curry1');
+
+  var slice = _require(_dependencyMap[2], './slice');
+
+  var tail = _curry1(_checkForMethod('tail', slice(1, Infinity)));
+
+  module.exports = tail;
+});

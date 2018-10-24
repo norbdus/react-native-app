@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry2 = _require(_dependencyMap[0], './internal/_curry2');
+
+  var path = _require(_dependencyMap[1], './path');
+
+  var prop = _curry2(function prop(p, obj) {
+    return path([p], obj);
+  });
+
+  module.exports = prop;
+});

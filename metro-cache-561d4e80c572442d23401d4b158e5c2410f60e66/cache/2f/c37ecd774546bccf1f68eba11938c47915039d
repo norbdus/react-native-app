@@ -1,0 +1,9 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _concat = _require(_dependencyMap[0], './internal/_concat');
+
+  var _createPartialApplicator = _require(_dependencyMap[1], './internal/_createPartialApplicator');
+
+  var partial = _createPartialApplicator(_concat);
+
+  module.exports = partial;
+});

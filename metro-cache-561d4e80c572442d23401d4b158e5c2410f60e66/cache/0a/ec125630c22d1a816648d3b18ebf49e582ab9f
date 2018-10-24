@@ -1,0 +1,35 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _curry2 = _require(_dependencyMap[0], './internal/_curry2');
+
+  var _dispatchable = _require(_dependencyMap[1], './internal/_dispatchable');
+
+  var _map = _require(_dependencyMap[2], './internal/_map');
+
+  var _reduce = _require(_dependencyMap[3], './internal/_reduce');
+
+  var _xmap = _require(_dependencyMap[4], './internal/_xmap');
+
+  var curryN = _require(_dependencyMap[5], './curryN');
+
+  var keys = _require(_dependencyMap[6], './keys');
+
+  var map = _curry2(_dispatchable(['fantasy-land/map', 'map'], _xmap, function map(fn, functor) {
+    switch (Object.prototype.toString.call(functor)) {
+      case '[object Function]':
+        return curryN(functor.length, function () {
+          return fn.call(this, functor.apply(this, arguments));
+        });
+
+      case '[object Object]':
+        return _reduce(function (acc, key) {
+          acc[key] = fn(functor[key]);
+          return acc;
+        }, {}, keys(functor));
+
+      default:
+        return _map(fn, functor);
+    }
+  }));
+
+  module.exports = map;
+});

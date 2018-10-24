@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _checkForMethod = _require(_dependencyMap[0], './internal/_checkForMethod');
+
+  var _curry3 = _require(_dependencyMap[1], './internal/_curry3');
+
+  var slice = _curry3(_checkForMethod('slice', function slice(fromIndex, toIndex, list) {
+    return Array.prototype.slice.call(list, fromIndex, toIndex);
+  }));
+
+  module.exports = slice;
+});

@@ -1,0 +1,15 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _has = _require(_dependencyMap[0], './_has');
+
+  var toString = Object.prototype.toString;
+
+  var _isArguments = function _isArguments() {
+    return toString.call(arguments) === '[object Arguments]' ? function _isArguments(x) {
+      return toString.call(x) === '[object Arguments]';
+    } : function _isArguments(x) {
+      return _has('callee', x);
+    };
+  };
+
+  module.exports = _isArguments;
+});

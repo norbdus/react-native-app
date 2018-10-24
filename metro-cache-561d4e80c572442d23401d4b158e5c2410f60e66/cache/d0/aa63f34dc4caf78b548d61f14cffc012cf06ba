@@ -1,0 +1,7 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  function _identity(x) {
+    return x;
+  }
+
+  module.exports = _identity;
+});

@@ -1,0 +1,30 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _arity = _require(_dependencyMap[0], './internal/_arity');
+
+  var _curry1 = _require(_dependencyMap[1], './internal/_curry1');
+
+  var map = _require(_dependencyMap[2], './map');
+
+  var max = _require(_dependencyMap[3], './max');
+
+  var reduce = _require(_dependencyMap[4], './reduce');
+
+  var cond = _curry1(function cond(pairs) {
+    var arity = reduce(max, 0, map(function (pair) {
+      return pair[0].length;
+    }, pairs));
+    return _arity(arity, function () {
+      var idx = 0;
+
+      while (idx < pairs.length) {
+        if (pairs[idx][0].apply(this, arguments)) {
+          return pairs[idx][1].apply(this, arguments);
+        }
+
+        idx += 1;
+      }
+    });
+  });
+
+  module.exports = cond;
+});

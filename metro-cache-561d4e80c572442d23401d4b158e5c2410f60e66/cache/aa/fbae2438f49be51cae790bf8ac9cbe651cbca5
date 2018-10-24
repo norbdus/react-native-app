@@ -1,0 +1,403 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./node_modules/react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _jsxFileName = "/home/vitorio/projetos_react-native/todo-list/App.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _Task = _require(_dependencyMap[3], "./app/components/Task");
+
+  var _Task2 = _interopRequireDefault(_Task);
+
+  var _api = _require(_dependencyMap[4], "./services/api");
+
+  var _api2 = _interopRequireDefault(_api);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    App: {
+      displayName: "App"
+    }
+  };
+
+  var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/vitorio/projetos_react-native/todo-list/App.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var App = _wrapComponent("App")(function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    function App() {
+      var _ref,
+          _this2 = this;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, App);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        taskArray: [{
+          'task': 'teste task'
+        }],
+        taskText: '',
+        errorMessage: null,
+        loggedInUser: null
+      }, _this.signIn = function _callee() {
+        var response, _response$data, user, token;
+
+        return regeneratorRuntime.async(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return regeneratorRuntime.awrap(_api2.default.post('/login', {
+                  username: 'norbdus',
+                  password: '12345678'
+                }));
+
+              case 3:
+                response = _context.sent;
+                _response$data = response.data, user = _response$data.user, token = _response$data.token;
+                _context.next = 7;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.multiSet([['@todoList:token', token], ['@todoList:user', JSON.stringify(user)]]));
+
+              case 7:
+                _this.setState({
+                  loggedInUser: user
+                });
+
+                _context.next = 13;
+                break;
+
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](0);
+
+                _this.setState({
+                  errorMessage: 'dados invalidos'
+                });
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, null, _this2, [[0, 10]]);
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(App, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var token, user;
+        return regeneratorRuntime.async(function componentDidMount$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.getItem('@todoList:token'));
+
+              case 2:
+                token = _context2.sent;
+                _context2.t0 = JSON;
+                _context2.next = 6;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.getItem('@todoList:user'));
+
+              case 6:
+                _context2.t1 = _context2.sent;
+                user = _context2.t0.parse.call(_context2.t0, _context2.t1);
+
+                if (token && user) {
+                  this.setState({
+                    loggedInUser: user
+                  });
+                }
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, null, this);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this3 = this;
+
+        var tasks = this.state.taskArray.map(function (val, key) {
+          return _react3.default.createElement(_Task2.default, {
+            key: key,
+            keyval: key,
+            val: val,
+            deleteMethod: function deleteMethod() {
+              return _this3.deleteTask(key);
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 45
+            }
+          });
+        });
+        return _react3.default.createElement(
+          _reactNative.View,
+          {
+            style: styles.containerLogin,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 49
+            }
+          },
+          this.state.loggedInUser && _react3.default.createElement(
+            _reactNative.Text,
+            {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 50
+              }
+            },
+            this.state.loggedInUser
+          ),
+          this.state.errorMessage && _react3.default.createElement(
+            _reactNative.Text,
+            {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 51
+              }
+            },
+            this.state.errorMessage
+          ),
+          this.state.loggedInUser ? _react3.default.createElement(
+            _reactNative.View,
+            {
+              style: styles.container,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 53
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              {
+                style: styles.header,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 54
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                {
+                  style: styles.headerText,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 55
+                  }
+                },
+                "- NOTER -"
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.ScrollView,
+              {
+                style: styles.scrollContainer,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 58
+                }
+              },
+              tasks
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              {
+                style: styles.footer,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 61
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                {
+                  onPress: this.addTask.bind(this),
+                  style: styles.addButton,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 63
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  {
+                    style: styles.addButtonText,
+                    __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 64
+                    }
+                  },
+                  "+"
+                )
+              ),
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: styles.textInput,
+                onChangeText: function onChangeText(taskText) {
+                  return _this3.setState({
+                    taskText: taskText
+                  });
+                },
+                value: this.state.tasktext,
+                placeholder: "> task",
+                placeholderTextColor: "white",
+                underlineColorAndroid: "transparent",
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 67
+                }
+              })
+            )
+          ) : _react3.default.createElement(
+            _reactNative.View,
+            {
+              style: styles.containerLogin,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 73
+              }
+            },
+            _react3.default.createElement(_reactNative.Button, {
+              onPress: this.signIn,
+              title: "Entrar",
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 74
+              }
+            })
+          )
+        );
+      }
+    }, {
+      key: "addTask",
+      value: function addTask() {
+        if (this.state.taskText) {
+          var d = new Date();
+          this.state.taskArray.push({
+            date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
+            'task': this.state.taskText
+          });
+          this.setState({
+            taskArray: this.state.taskArray
+          });
+          this.setState({
+            taskText: ''
+          });
+        }
+      }
+    }, {
+      key: "deleteTask",
+      value: function deleteTask(key) {
+        this.state.taskArray.splice(key, 1);
+        this.setState({
+          taskArray: this.state.taskArray
+        });
+      }
+    }]);
+
+    return App;
+  }(_react3.default.Component));
+
+  exports.default = App;
+
+  var styles = _reactNative.StyleSheet.create({
+    container: {
+      flex: 1
+    },
+    containerLogin: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    header: {
+      backgroundColor: '#E91E63',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomWidth: 10,
+      borderBottomColor: '#ddd'
+    },
+    headerText: {
+      color: 'white',
+      fontSize: 18,
+      padding: 26
+    },
+    scrollContainer: {
+      flex: 1,
+      marginBottom: 100
+    },
+    footer: {
+      position: 'absolute',
+      alignItems: 'center',
+      bottom: 0,
+      left: 0,
+      right: 0
+    },
+    addButton: {
+      backgroundColor: '#E91E63',
+      width: 90,
+      height: 90,
+      borderRadius: 50,
+      borderColor: '#ccc',
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 8,
+      marginBottom: -45,
+      zIndex: 10
+    },
+    addButtonText: {
+      color: '#fff',
+      fontSize: 24
+    },
+    textInput: {
+      alignSelf: 'stretch',
+      color: '#fff',
+      padding: 20,
+      paddingTop: 46,
+      backgroundColor: '#252525',
+      borderTopWidth: 2,
+      borderTopColor: '#ededed'
+    }
+  });
+});

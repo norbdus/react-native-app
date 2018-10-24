@@ -1,0 +1,6 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var always = _require(_dependencyMap[0], './always');
+
+  var T = always(true);
+  module.exports = T;
+});

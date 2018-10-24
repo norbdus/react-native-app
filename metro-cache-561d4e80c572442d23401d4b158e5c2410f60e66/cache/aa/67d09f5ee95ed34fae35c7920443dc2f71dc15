@@ -1,0 +1,31 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _has = _require(_dependencyMap[0], './_has');
+
+  function _objectAssign(target) {
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var output = Object(target);
+    var idx = 1;
+    var length = arguments.length;
+
+    while (idx < length) {
+      var source = arguments[idx];
+
+      if (source != null) {
+        for (var nextKey in source) {
+          if (_has(nextKey, source)) {
+            output[nextKey] = source[nextKey];
+          }
+        }
+      }
+
+      idx += 1;
+    }
+
+    return output;
+  }
+
+  module.exports = _objectAssign;
+});
