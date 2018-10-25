@@ -3,10 +3,39 @@ __d(function (global, _require, module, exports, _dependencyMap) {
         value: true
     });
 
-    var _apisauce = _require(_dependencyMap[0], "apisauce");
+    var _this = this;
+
+    var _reactNative = _require(_dependencyMap[0], "react-native");
+
+    var _apisauce = _require(_dependencyMap[1], "apisauce");
 
     var api = (0, _apisauce.create)({
         baseURL: 'http://192.168.42.143:3000'
+    });
+    api.addAsyncRequestTransform(function (request) {
+        return function _callee() {
+            var token;
+            return regeneratorRuntime.async(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return regeneratorRuntime.awrap(_reactNative.AsyncStorage.getItem('@CodeApi:token'));
+
+                        case 2:
+                            token = _context.sent;
+
+                            if (token) {
+                                request.headers['Authorization'] = "Token " + token;
+                            }
+
+                        case 4:
+                        case "end":
+                            return _context.stop();
+                    }
+                }
+            }, null, _this);
+        };
     });
     api.addResponseTransform(function (response) {
         if (!response.ok) throw response;

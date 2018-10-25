@@ -6,18 +6,22 @@ import api from './services/api'
 
 export default class App extends React.Component {
 
+
+
   state = {
-    taskArray: [{ 'task': 'teste task' }],
+    taskArray: [],
     taskText: '',
     errorMessage: null,
     loggedInUser: null,
+    username: '',
+    password: '',
   }
 
   signIn = async () => {
     try {
       const response = await api.post('/login', {
-        username: 'norbdus',
-        password: '12345678'
+        username: this.state.username,
+        password: this.state.password,
       });
       const { token } = response.data;
       console.log(token);
@@ -32,10 +36,29 @@ export default class App extends React.Component {
 
   }
 
+  getTasksList = async () => {
+    try {
+      const response = await api.get('/api/v1/todos');
+      console.log(response);
+      const { taskArray } = response.data;
+      console.log(response.data);
+      this.setState({ taskArray })
+      console.log(taskArray);
+    } catch ( response ) {
+      this.setState({ errorMessage: response.data.error })
+    }
+  }
+
+  signOut = async () => {
+    response = await api.delete('/logout');
+    AsyncStorage.removeItem('@todoList:token');
+    this.setState({ loggedInUser: null });
+  }
+
   async componentDidMount() {
     const token = await AsyncStorage.getItem('@todoList:token');
     if (token) {
-      this.setState({ loggedInUser: true })
+      this.setState({ loggedInUser: true });
     }
   }
 
@@ -45,13 +68,15 @@ export default class App extends React.Component {
     });
 
     return (
-      <View style={styles.containerLogin}>
+      <View style={styles.container}>
         {this.state.loggedInUser && <Text>{this.state.loggedInUser}</Text>}
         {this.state.errorMessage && <Text>{this.state.errorMessage}</Text>}
         {this.state.loggedInUser ?
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>- NOTER -</Text>
+              <Text style={styles.headerText}>- MINHAS TASK -</Text>
+              <Button style={styles.signoutButton} onPress={this.signOut} title="Sair"></Button>
+              <Button style={styles.signoutButton} onPress={this.getTasksList} title="Atualizar"></Button>
             </View>
 
             <ScrollView style={styles.scrollContainer}>
@@ -65,13 +90,39 @@ export default class App extends React.Component {
 
               <TextInput style={styles.textInput}
                 onChangeText={(taskText) => this.setState({ taskText })} value={this.state.tasktext}
-                placeholder='> task' placeholderTextColor='white' underlineColorAndroid='transparent'>
+                placeholder='Descreva aqui a Task' placeholderTextColor='white' underlineColorAndroid='transparent'>
               </TextInput>
             </View>
           </View>
           : <View style={styles.containerLogin}>
-            <Button onPress={this.signIn} title="Entrar"></Button>
-          </View>}
+            {/* <Button onPress={this.signIn} title="Entrar"></Button> */}
+            <Text style={styles.titleText}>TODO - LIST</Text>
+            <TextInput
+              value={this.state.username}
+              keyboardType='email-address'
+              onChangeText={(username) => this.setState({ username })}
+              placeholder='Username'
+              placeholderTextColor='white'
+              style={styles.textInput}
+            />
+            <TextInput
+              value={this.state.password}
+              onChangeText={(password) => this.setState({ password })}
+              placeholder={'password'}
+              secureTextEntry={true}
+              placeholderTextColor='white'
+              style={styles.textInput}
+            />
+
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.signIn}
+            >
+              <Text style={styles.buttonText}> Entrar </Text>
+            </TouchableOpacity>
+          </View>
+        }
       </View>
     );
   }
@@ -135,6 +186,11 @@ const styles = StyleSheet.create({
     marginBottom: -45,
     zIndex: 10,
   },
+  signoutButton: {
+    flex: 1,
+    backgroundColor: '#E91E63',
+    left: 0,
+  },
   addButtonText: {
     color: '#fff',
     fontSize: 24,
@@ -147,7 +203,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#252525',
     borderTopWidth: 2,
     borderTopColor: '#ededed',
-  }
+  },
+  input: {
+    width: 200,
+    fontSize: 20,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'white',
+    marginVertical: 10,
+  },
 
 
 
