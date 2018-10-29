@@ -20,8 +20,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "android": {
+      "package": "com.package.todolist",
+      "versionCode": 1,
+      "permissions": [],
+      "icon": "./todo.png"
     }
   }
 }

@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import { create } from 'apisauce';
 
 const api = create({
-    baseURL: 'http://192.168.42.143:3000',
+    baseURL: 'https://tasks-manager-vitorio.herokuapp.com/',
 });
 
 api.addAsyncRequestTransform(request => async () =>{

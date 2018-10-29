@@ -25,10 +25,12 @@ export default class App extends React.Component {
       });
       const { token } = response.data;
       console.log(token);
-
+      
       await AsyncStorage.multiSet([
         ['@todoList:token', token]
       ]);
+      console.log(token);
+      this.getTasksList();
       this.setState({ loggedInUser: true })
     } catch (response) {
       this.setState({ errorMessage: 'dados invalidos' })
@@ -37,14 +39,18 @@ export default class App extends React.Component {
   }
 
   getTasksList = async () => {
+    console.log('GET TASK LIST');
+    const token = await AsyncStorage.getItem('@todoList:token');
     try {
-      const response = await api.get('/api/v1/todos');
-      console.log(response);
-      const { taskArray } = response.data;
-      console.log(response.data);
-      this.setState({ taskArray })
-      console.log(taskArray);
+      const response = await api.get('/api/v1/todos',{},{headers: {'Authorization': `Token ${token}`}});
+      console.log(response["data"]);
+      const taskArray = response["data"];
+      // const responseJson = await response.json();
+      // console.log(`OLHA A DATA:${responseJson}`);
+      this.setState({ taskArray });
+      // console.log(`OLHA O ARRAY:${taskArray}`);
     } catch ( response ) {
+      console.log(`PAPOCOU ${response}`);
       this.setState({ errorMessage: response.data.error })
     }
   }
@@ -64,7 +70,7 @@ export default class App extends React.Component {
 
   render() {
     let tasks = this.state.taskArray.map((val, key) => {
-      return <Task key={key} keyval={key} val={val} deleteMethod={() => this.deleteTask(key)} />
+      return <Task key={key} keyval={key} val={val} deleteMethod={() => this.deleteTask(val["id"])} />
     });
 
     return (
@@ -74,9 +80,8 @@ export default class App extends React.Component {
         {this.state.loggedInUser ?
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>- MINHAS TASK -</Text>
+              <Text style={styles.headerText}>- My ToDo-List -</Text>
               <Button style={styles.signoutButton} onPress={this.signOut} title="Sair"></Button>
-              <Button style={styles.signoutButton} onPress={this.getTasksList} title="Atualizar"></Button>
             </View>
 
             <ScrollView style={styles.scrollContainer}>
@@ -127,18 +132,29 @@ export default class App extends React.Component {
     );
   }
 
-  addTask() {
-    if (this.state.taskText) {
-      var d = new Date();
-      this.state.taskArray.push({ date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(), 'task': this.state.taskText })
-      this.setState({ taskArray: this.state.taskArray })
-      this.setState({ taskText: '' })
+  addTask= async () => {
+    const token = await AsyncStorage.getItem('@todoList:token');
+    try {
+      if (this.state.taskText) {
+      const response = await api.post('/api/v1/todos',{
+        todo: {description: this.state.taskText }},
+              {headers: {'Authorization': `Token ${token}`}});
+      }
+      this.getTasksList();
+    } catch ( response ) {
+      this.setState({ errorMessage: response.data.error })
     }
   }
 
-  deleteTask(key) {
-    this.state.taskArray.splice(key, 1);
-    this.setState({ taskArray: this.state.taskArray })
+  deleteTask = async(key) => {
+    const token = await AsyncStorage.getItem('@todoList:token');
+    try {
+      const response = await api.delete(`/api/v1/todos/${key}`,{},
+              {headers: {'Authorization': `Token ${token}`}});
+      this.getTasksList();
+    }catch (response) {
+      this.setState({ errorMessage: response.data.error })
+    }
   }
 }
 

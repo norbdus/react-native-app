@@ -6,10 +6,9 @@ export default class App extends React.Component {
     return (
       <View key={this.props.keyval} style={styles.task}>
        
-        <Text style={styles.taskText}>{this.props.val.date}</Text>
-        <Text style={styles.taskText}>{this.props.val.task}</Text>
-
-        <TouchableOpacity onPress={this.props.deleteMethod} style={styles.taskDelete}>
+        <Text style={this.props.val["done"] ? styles.taskDone : styles.taskText}>{this.props.val["created_at"]}</Text>
+        <Text style={this.props.val["done"] ? styles.taskDone : styles.taskText}>{this.props.val["description"]}</Text>
+        <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.val["id"])} style={styles.taskDelete}>
             <Text style={styles.taskDeleteText}>X</Text>
         </TouchableOpacity>
 
@@ -31,6 +30,12 @@ const styles = StyleSheet.create({
       paddingLeft: 20,
       borderLeftWidth: 10,
       borderLeftColor: '#E91E63',
+    },
+    taskDone: {
+      paddingLeft: 20,
+      borderLeftWidth: 10,
+      borderLeftColor: '#999966',
+      color: '#999966',
     },
     taskDelete: {
         position: 'absolute',
