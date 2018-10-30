@@ -19,3 +19,6 @@ npm start
 ```
 
 ## Screenshots
+![Alt text](https://github.com/norbdus/react-native-app/blob/master/screenshots/Screenshot_20181029-235858.png "Login")
+
+![Alt text](https://github.com/norbdus/react-native-app/blob/master/screenshots/Screenshot_20181030-000123.png "Dash")
