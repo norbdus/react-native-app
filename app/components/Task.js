@@ -1,12 +1,13 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Moment from 'moment';
 
 export default class App extends React.Component {
   render() {
     return (
       <View key={this.props.keyval} style={styles.task}>
        
-        <Text style={this.props.val["done"] ? styles.taskDone : styles.taskText}>{this.props.val["created_at"]}</Text>
+        <Text style={this.props.val["done"] ? styles.taskDone : styles.taskText}>{Moment(this.props.val["created_at"]).format('L')}</Text>
         <Text style={this.props.val["done"] ? styles.taskDone : styles.taskText}>{this.props.val["description"]}</Text>
         <TouchableOpacity onPress={() => this.props.deleteMethod(this.props.val["id"])} style={styles.taskDelete}>
             <Text style={styles.taskDeleteText}>X</Text>

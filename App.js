@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Button, AsyncStorage, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Alert, TouchableOpacity, Button, AsyncStorage, KeyboardAvoidingView , Image } from 'react-native';
+
 
 import Task from './app/components/Task';
 import api from './services/api'
@@ -33,7 +34,11 @@ export default class App extends React.Component {
       this.getTasksList();
       this.setState({ loggedInUser: true })
     } catch (response) {
-      this.setState({ errorMessage: 'dados invalidos' })
+      Alert.alert(
+        "ERRO",
+        "Dados Inválidos",
+      );
+      this.setState({ errorMessage: 'dados invalidos' });
     }
 
   }
@@ -76,7 +81,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         {this.state.loggedInUser && <Text>{this.state.loggedInUser}</Text>}
-        {this.state.errorMessage && <Text>{this.state.errorMessage}</Text>}
+        {/* {this.state.errorMessage && <Text>{this.state.errorMessage}</Text>} */}
         {this.state.loggedInUser ?
           <View style={styles.container}>
             <View style={styles.header}>
@@ -99,34 +104,40 @@ export default class App extends React.Component {
               </TextInput>
             </View>
           </View>
-          : <View style={styles.containerLogin}>
-            {/* <Button onPress={this.signIn} title="Entrar"></Button> */}
-            <Text style={styles.titleText}>TODO - LIST</Text>
-            <TextInput
-              value={this.state.username}
-              keyboardType='email-address'
-              onChangeText={(username) => this.setState({ username })}
-              placeholder='Username'
-              placeholderTextColor='white'
-              style={styles.textInput}
-            />
-            <TextInput
-              value={this.state.password}
-              onChangeText={(password) => this.setState({ password })}
-              placeholder={'password'}
-              secureTextEntry={true}
-              placeholderTextColor='white'
-              style={styles.textInput}
-            />
+          : <KeyboardAvoidingView behavior="padding" style={styles.containerLogin}>
+              <View style={styles.logoContainer}>
+                <Image style={styles.logo} source={require('./assets/task-planning.png')} />
+                <Text style={styles.title}>My Todo List</Text>
+              </View>
+            <View style={styles.formContainer}>
+              <TextInput
+                value={this.state.username}
+                onChangeText={(username) => this.setState({ username })}
+                style={styles.inputLogin}
+                returnKeyType="next"
+                autoCapitalize="none"
+                placeholder="username"
+                placeholderTextColor="rgba(255,255,255,0.7)"
+              />
+              <TextInput
+                value={this.state.password}
+                onChangeText={(password) => this.setState({ password })}
+                secureTextEntry={true}
+                returnKeyType="go"
+                style={styles.inputLogin}
+                placeholder="password"
+                placeholderTextColor="rgba(255,255,255,0.7)"
+              />
 
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={this.signIn}
-            >
-              <Text style={styles.buttonText}> Entrar </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={this.signIn}
+              >
+                <Text style={styles.buttonText}> Login </Text>
+              </TouchableOpacity>
           </View>
+          </KeyboardAvoidingView>
         }
       </View>
     );
@@ -164,8 +175,43 @@ const styles = StyleSheet.create({
   },
   containerLogin: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#1e272e',
+  },
+  logoContainer: {
     alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  title: {
+    color: '#FFF',
+    marginTop: 10,
+    width: 160,
+    textAlign: 'center',
+    opacity: 0.9,
+  },
+  formContainer: {
+    padding: 20,
+    },
+  inputLogin: {
+    height: 40,
+    backgroundColor: '#E91E63',
+    marginBottom: 20,
+    color: '#FFF',
+    paddingHorizontal: 10,
+  },
+  buttonContainer: {
+    backgroundColor: '#2980b9',
+    paddingVertical: 15,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontWeight: '700',
+    
   },
   header: {
     backgroundColor: '#E91E63',
